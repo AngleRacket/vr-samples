@@ -3,6 +3,7 @@ using System.Diagnostics;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 public class ProcessSpawner : MonoBehaviour
 {
@@ -16,17 +17,35 @@ public class ProcessSpawner : MonoBehaviour
     void Start()
     {
         var processes = System.Diagnostics.Process.GetProcesses();
-        processCountLabel.text = processes.Length.ToString();
+        UpdateProcessCount(processes.Length);
+
         foreach (var process in processes)
         {
             var spreadunits = 15;
             var halfspread = spreadunits / 2;
-            var position = new Vector3((Random.value * spreadunits) - halfspread, 2 + (Random.value * spreadunits), (Random.value * spreadunits) - halfspread);
+            var position = new Vector3((UnityEngine.Random.value * spreadunits) - halfspread, 2 + (UnityEngine.Random.value * spreadunits), (UnityEngine.Random.value * spreadunits) - halfspread);
             var obj = Instantiate(gameObject, position, Quaternion.identity);
+            obj.layer = 8;
 
             gameObjects[process] = obj;
             lastTimes[process] = process.TotalProcessorTime;
+
+            UpdateObjInfoPanel(obj, process);
         }
+    }
+
+    private void UpdateProcessCount(int count)
+    {
+        if (processCountLabel == null) return;
+        processCountLabel.text = count.ToString();
+    }
+
+    private void UpdateObjInfoPanel(GameObject obj, Process process)
+    {
+        if (obj == null || process == null) return;
+        ProcessCubeProperties properties = obj.GetComponent<ProcessCubeProperties>();
+        if (properties == null) return;
+        if (properties.ProcessNameLabel != null) properties.ProcessNameLabel.text = process.ProcessName;
     }
 
     // Update is called once per frame
@@ -34,14 +53,17 @@ public class ProcessSpawner : MonoBehaviour
     {
         if (UnityEngine.Time.frameCount % 120 == 0)
         {
-            foreach (var obj in gameObjects)
+            foreach (var process in gameObjects.Keys)
             {
-                obj.Key.Refresh();
-                var lastTime = lastTimes[obj.Key];
-                float scale = (float)(obj.Key.TotalProcessorTime - lastTime ).TotalMilliseconds / 1000.0f ;
-                scale += 0.05f;
-                obj.Value.transform.localScale = new Vector3(scale, scale, scale);
-                lastTimes[obj.Key] = obj.Key.TotalProcessorTime;
+                var obj = gameObjects[process];
+                if (!obj.activeSelf) return;
+
+                process.Refresh();
+                var lastTime = lastTimes[process];
+                float scale = (float)(process.TotalProcessorTime - lastTime ).TotalMilliseconds / 1000.0f ;
+                scale += 0.25f;
+                obj.transform.localScale = new Vector3(scale, scale, scale);
+                lastTimes[process] = process.TotalProcessorTime;
             }
         }
         //if (UnityEngine.Time.frameCount % 120 == 0)

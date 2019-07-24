@@ -46,6 +46,19 @@ MonoBehaviour:
   m_snapOrientation: 0
   m_snapOffset: {fileID: 0}
   m_grabPoints: []
+--- !u!114 &2488742162230748266
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7473591154414029554}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5bfcd054df64e334ba2f191666f3fe92, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Type: 2
 --- !u!1001 &7473591154413931602
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -55,19 +68,19 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: 4a42e5011990d97479599bd0c3f4f7bb, type: 3}
       propertyPath: m_Name
-      value: ball_billiard_10 Variant
+      value: ball_billiard
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4a42e5011990d97479599bd0c3f4f7bb, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0
+      value: 4.5
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4a42e5011990d97479599bd0c3f4f7bb, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.879
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4a42e5011990d97479599bd0c3f4f7bb, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 4a42e5011990d97479599bd0c3f4f7bb, type: 3}
       propertyPath: m_LocalRotation.x
